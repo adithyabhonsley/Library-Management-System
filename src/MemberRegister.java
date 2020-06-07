@@ -99,7 +99,7 @@ public class MemberRegister extends JFrame {
 					obj.setVisible(true);
 					JOptionPane.showMessageDialog(null, "Your Standard User account has been created! Please login to access your account.");
 					try {
-						FileWriter fw = new FileWriter ("userProfiles.txt");
+						FileWriter fw = new FileWriter ("userProfiles.txt", false);
 						fw.write (userName+" "+password);
 						fw.close();
 					} catch (FileNotFoundException e) {

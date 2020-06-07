@@ -90,7 +90,7 @@ public class AdminRegister extends JFrame {
 					obj.setVisible(true);
 					JOptionPane.showMessageDialog(null, "Your Administrator account has been created! Please login to access your account.");
 					try {
-						PrintWriter fw = new PrintWriter ("adminProfiles.txt");
+						PrintWriter fw = new PrintWriter ("adminProfiles.txt", false);
 						fw.write (userName+" "+password);
 						fw.close();
 					} catch (FileNotFoundException e) {
@@ -141,7 +141,7 @@ public class AdminRegister extends JFrame {
 		comboBox.setFont(new Font("Tw Cen MT", Font.PLAIN, 17));
 		comboBox.setBounds(187, 156, 159, 22);
 		contentPane.add(comboBox);
-		comboBox.addItem("Corporate Office");
+		comboBox.addItem("Select Library Location:");
 		comboBox.addItem("Houston");
 		comboBox.addItem("Dallas");
 		comboBox.addItem("Austin");
