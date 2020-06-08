@@ -48,7 +48,7 @@ public class MemberRegister extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		usernames = "";
 		passwords = "";
-		setBounds(700, 250, 472, 350);
+		setBounds(0, 0, 472, 350);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -69,7 +69,7 @@ public class MemberRegister extends JFrame {
 		JLabel label_3 = new JLabel("Password:");
 		label_3.setForeground(Color.BLACK);
 		label_3.setFont(new Font("Tw Cen MT", Font.BOLD, 17));
-		label_3.setBounds(88, 103, 105, 14);
+		label_3.setBounds(88, 90, 105, 14);
 		contentPane.add(label_3);
 		
 		textField = new JTextField();
@@ -78,7 +78,7 @@ public class MemberRegister extends JFrame {
 		contentPane.add(textField);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(190, 101, 159, 20);
+		passwordField.setBounds(190, 88, 159, 20);
 		contentPane.add(passwordField);
 		
 		JButton button_2 = new JButton("Register");
@@ -112,13 +112,13 @@ public class MemberRegister extends JFrame {
 			}
 		});
 		button_2.setFont(new Font("Tw Cen MT", Font.PLAIN, 17));
-		button_2.setBounds(171, 187, 112, 23);
+		button_2.setBounds(169, 161, 112, 23);
 		contentPane.add(button_2);
 		
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setForeground(Color.BLACK);
 		lblEmail.setFont(new Font("Tw Cen MT", Font.BOLD, 17));
-		lblEmail.setBounds(88, 147, 105, 14);
+		lblEmail.setBounds(88, 117, 105, 14);
 		contentPane.add(lblEmail);
 		
 		JButton button = new JButton("");
@@ -136,14 +136,14 @@ public class MemberRegister extends JFrame {
 		contentPane.add(button);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(187, 146, 162, 23);
+		textField_1.setBounds(190, 116, 162, 23);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 		
 		JLabel label = new JLabel("");
 		Image c = Toolkit.getDefaultToolkit().getImage("Icons//Background.png");
 		label.setIcon(new ImageIcon(c));
-		label.setBounds(0, 0, 455, 262);
+		label.setBounds(0, 0, 472, 328);
 		contentPane.add(label);
 	}
 }

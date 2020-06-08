@@ -1,11 +1,11 @@
 public class Book {
 	private String title;
 	private String author;
-	private String bookID;
+	private int bookID;
 	private String holder;
 	private boolean checkedOut;
 	
-	public Book(String a, String b, String c, String f, boolean d) {
+	public Book(String a, String b, int c, String f, boolean d) {
 		title = a; 
 		author = b; 
 		bookID = c; 
@@ -21,7 +21,7 @@ public class Book {
 		return author; 
 	}
 	
-	public String getBookID() { 
+	public int getBookID() { 
 		return bookID;
 	}
 	
@@ -33,7 +33,7 @@ public class Book {
 		if(!checkedOut) 
 			return "Available"; 
 		else 
-			return "Held by: "+holder;
+			return "Held by: You";
 	}
 	
 	public void setHolder(String newHolder) { 
@@ -47,10 +47,12 @@ public class Book {
 		checkedOut = true;
 	}
 	
+	public void returnBook() { 
+		checkedOut = false;
+	}
+	
 	public String toString() { 
-		if(checkedOut)
-			return "("+bookID+") "+title+" by "+author+" : Held by "+holder;
-		return " ("+bookID+") "+title+" by "+author+" : "+isAvailable();
+		return " ("+bookID+") "+title+" by "+author+": "+isAvailable();
 	}
 
 }

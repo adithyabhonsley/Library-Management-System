@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 import javax.swing.ImageIcon;
@@ -51,7 +52,7 @@ public class MemberLogin extends JFrame {
 
 	public MemberLogin() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(700, 250, 480, 360);
+		setBounds(0, 0, 480, 360);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -124,7 +125,7 @@ public class MemberLogin extends JFrame {
 			}
 		});
 		button_1.setFont(new Font("Aharoni", Font.PLAIN, 16));
-		button_1.setBounds(10, 13, 64, 23);
+		button_1.setBounds(10, 13, 64, 33);
 		contentPane.add(button_1);
 		
 		JButton button = new JButton("Login");
@@ -150,9 +151,7 @@ public class MemberLogin extends JFrame {
 									obj.setVisible(true);
 									JOptionPane.showMessageDialog(null, "Please contact an administrator if you require login help.");
 						}
-					}} catch (HeadlessException e1) {
-						e1.printStackTrace();
-					} catch (FileNotFoundException e1) {
+					}} catch (Exception e1) {
 						e1.printStackTrace();
 					}
 				}
@@ -165,7 +164,7 @@ public class MemberLogin extends JFrame {
 		JLabel label231 = new JLabel(".");
 		Image b = Toolkit.getDefaultToolkit().getImage("Icons//Background.png");
 		label231.setIcon(new ImageIcon(b));
-		label231.setBounds(0, 0, 448, 284);
+		label231.setBounds(0, 0, 490, 362);
 		contentPane.add(label231);
 	}
 }

@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -23,9 +24,9 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-public class AdminPage extends JFrame {
+public class AdminPage extends AdminLogin {
 
-	private JPanel contentPane;
+	private static JPanel contentPane;
 	private static ArrayList<Book>catalog;
 	private static JList <String> list;
 	private static DefaultListModel<String> model;
@@ -45,19 +46,6 @@ public class AdminPage extends JFrame {
 				try {
 					AdminPage frame = new AdminPage();
 					frame.setVisible(true);
-					catalog = new ArrayList<Book>();
-					model = new DefaultListModel<String>();
-					list = new JList<String>(model);
-					Scanner sc = new Scanner(new File("books.txt"));
-					while(sc.hasNextLine()) {
-						String [] arr = sc.nextLine().split(" by ");
-						boolean p = !(arr[2].equals("false"));
-						String s = "";
-						if(p) s = arr[2];
-						Book b = new Book(arr[0],arr[1],Integer.toString((int)(Math.random()*1000)),s,p);
-						catalog.add(b);
-						model.addElement(b.toString());
-					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -65,38 +53,51 @@ public class AdminPage extends JFrame {
 		});
 	}
 
-	public AdminPage() {
+	public AdminPage() throws FileNotFoundException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(700, 250, 1078, 736);
+		setBounds(0, 0, 1078, 736);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		
-		JLabel lblAdminPage = new JLabel("Administrator");
+		JLabel lblAdminPage = new JLabel("MyLibrary");
 		lblAdminPage.setFont(new Font("Tw Cen MT", Font.BOLD, 60));
 		lblAdminPage.setForeground(Color.BLACK);
-		lblAdminPage.setBounds(146, 15, 404, 64);
+		lblAdminPage.setBounds(146, 23, 404, 64);
 		contentPane.add(lblAdminPage);
 		
 		JLabel lblLibraryCatalog = new JLabel("Information Catalog");
-		lblLibraryCatalog.setIcon(new ImageIcon("C:\\Users\\Adithya\\Desktop\\graph.png"));
 		lblLibraryCatalog.setForeground(Color.BLACK);
-		lblLibraryCatalog.setFont(new Font("Tw Cen MT", Font.BOLD | Font.ITALIC, 32));
+		lblLibraryCatalog.setFont(new Font("Tw Cen MT", Font.BOLD, 29));
 		lblLibraryCatalog.setBounds(15, 153, 255, 39);
 		contentPane.add(lblLibraryCatalog);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		model = new DefaultListModel<String>();
+		list = new JList<String>(model);
+		
+		JScrollPane scrollPane = new JScrollPane(list);
 		scrollPane.setBounds(15, 200, 447, 423);
 		contentPane.add(scrollPane);
 		
-		scrollPane.setViewportView(list);
+		catalog = new ArrayList<Book>();
+		
+		//Adds list of sample books to library catalog
+		Scanner sc = new Scanner(new File("books.txt"));
+		while(sc.hasNextLine()) {
+			String [] arr = sc.nextLine().split(" by ");
+			String a = arr[0];
+			String b = arr[1].substring(0, arr[1].indexOf("("));
+			Book libraryBook = new Book(a,b,(int)(Math.random()*1000),"",false);
+			System.out.println(libraryBook.toString());
+			catalog.add(libraryBook);
+			model.addElement(libraryBook.toString());
+		}
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setLayout(null);
 		panel_2.setForeground(Color.YELLOW);
-		panel_2.setBorder(new TitledBorder(null, "Add Books", TitledBorder.LEADING, TitledBorder.TOP, new Font("Tw Cen MT", Font.BOLD | Font.ITALIC, 25)));
+		panel_2.setBorder(new TitledBorder(null, "Add Books", TitledBorder.LEADING, TitledBorder.TOP, new Font("Tw Cen MT", Font.BOLD, 25)));
 		panel_2.setBackground(new Color(0,0,0,5));
 		panel_2.setBounds(488, 362, 265, 141);
 		contentPane.add(panel_2);
@@ -126,7 +127,7 @@ public class AdminPage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String tit = textField_3.getText();
 				String aut = textField_4.getText();
-				Book b = new Book(tit,aut,Integer.toString((int)(Math.random()*1000)),"",false);
+				Book b = new Book(tit,aut,(int)Math.random()*1000,"",false);
 				model.addElement(b.toString());
 				textField_3.setText("");
 				textField_4.setText("");
@@ -139,15 +140,15 @@ public class AdminPage extends JFrame {
 		panel_2.add(btnAddBook);
 		
 		JLabel lblW = new JLabel("");
-		Image a = Toolkit.getDefaultToolkit().getImage("Icons//graph.png");
+		Image a = Toolkit.getDefaultToolkit().getImage("icons//controls.png");
 		lblW.setIcon(new ImageIcon(a));
-		lblW.setBounds(15, -34, 277, 220);
+		lblW.setBounds(6, 15, 170, 135);
 		contentPane.add(lblW);
 		
-		JLabel lblControlPage = new JLabel("Control Page");
+		JLabel lblControlPage = new JLabel("Administrator Portal");
 		lblControlPage.setForeground(Color.BLACK);
-		lblControlPage.setFont(new Font("Tw Cen MT", Font.BOLD, 60));
-		lblControlPage.setBounds(146, 82, 404, 64);
+		lblControlPage.setFont(new Font("Tw Cen MT", Font.PLAIN, 35));
+		lblControlPage.setBounds(146, 77, 404, 64);
 		contentPane.add(lblControlPage);
 		
 		JLabel lblTit = new JLabel("Title:");
@@ -171,8 +172,8 @@ public class AdminPage extends JFrame {
 		contentPane.add(textField_1);
 		
 		JLabel lblNewLabel = new JLabel("Book Specific Information");
-		lblNewLabel.setFont(new Font("Tw Cen MT", Font.BOLD | Font.ITALIC, 25));
-		lblNewLabel.setBounds(488, 158, 253, 33);
+		lblNewLabel.setFont(new Font("Tw Cen MT", Font.BOLD, 25));
+		lblNewLabel.setBounds(488, 158, 265, 33);
 		contentPane.add(lblNewLabel);
 		
 		textField_2 = new JTextField();
@@ -188,7 +189,7 @@ public class AdminPage extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setForeground(Color.YELLOW);
-		panel.setBorder(new TitledBorder(null, "Remove Books", TitledBorder.LEADING, TitledBorder.TOP, new Font("Tw Cen MT", Font.BOLD | Font.ITALIC, 25)));
+		panel.setBorder(new TitledBorder(null, "Remove Books", TitledBorder.LEADING, TitledBorder.TOP, new Font("Tw Cen MT", Font.BOLD, 25)));
 		panel.setBackground(new Color(0, 0, 0, 5));
 		panel.setBounds(488, 518, 265, 141);
 		contentPane.add(panel);
@@ -238,7 +239,6 @@ public class AdminPage extends JFrame {
 				model.removeAllElements();
 				for(Book b : catalog)
 					model.addElement(b.toString());
-
 			}
 		});
 		btnUpdateCatalog.setFont(new Font("Tw Cen MT", Font.BOLD, 21));
@@ -250,11 +250,21 @@ public class AdminPage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				list.removeAll();
 				model.removeAllElements();
-				model.addElement("ABhonsley (Houston)");
+				Scanner sc = null;
+				try {
+					sc = new Scanner(new File("adminProfiles.txt"));
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+				while(sc.hasNextLine()) {
+					String [] arr = sc.nextLine().split(" ");
+					System.out.println(arr[0]);
+					model.addElement(arr[0]+" - "+arr[2]+" Branch");
+				}
 			}
 		});
-		btnAdminList.setFont(new Font("Tw Cen MT", Font.BOLD, 21));
-		btnAdminList.setBounds(804, 158, 201, 39);
+		btnAdminList.setFont(new Font("Tw Cen MT", Font.PLAIN, 21));
+		btnAdminList.setBounds(770, 158, 261, 39);
 		contentPane.add(btnAdminList);
 		
 		JButton btnMemberList = new JButton("Member List");
@@ -264,8 +274,8 @@ public class AdminPage extends JFrame {
 				model.removeAllElements();
 			}
 		});
-		btnMemberList.setFont(new Font("Tw Cen MT", Font.BOLD, 21));
-		btnMemberList.setBounds(804, 210, 201, 39);
+		btnMemberList.setFont(new Font("Tw Cen MT", Font.PLAIN, 21));
+		btnMemberList.setBounds(770, 210, 261, 39);
 		contentPane.add(btnMemberList);
 		
 		JButton btnCheckedOutBooks = new JButton("Checked Out Books");
@@ -282,8 +292,8 @@ public class AdminPage extends JFrame {
 		contentPane.add(progressBar);
 		progressBar.setStringPainted(true);
 		progressBar.setName("Expert Rating");
-		btnCheckedOutBooks.setFont(new Font("Tw Cen MT", Font.BOLD, 21));
-		btnCheckedOutBooks.setBounds(799, 259, 206, 39);
+		btnCheckedOutBooks.setFont(new Font("Tw Cen MT", Font.PLAIN, 21));
+		btnCheckedOutBooks.setBounds(765, 259, 266, 39);
 		contentPane.add(btnCheckedOutBooks);
 		
 		JButton btnChangePassword = new JButton("Change Password");
@@ -294,8 +304,8 @@ public class AdminPage extends JFrame {
 				JOptionPane.showMessageDialog(null, "Your password has been succesfully changed.");
 			}
 		});
-		btnChangePassword.setFont(new Font("Tw Cen MT", Font.BOLD, 21));
-		btnChangePassword.setBounds(799, 360, 206, 39);
+		btnChangePassword.setFont(new Font("Tw Cen MT", Font.PLAIN, 21));
+		btnChangePassword.setBounds(765, 360, 266, 39);
 		contentPane.add(btnChangePassword);
 		
 		JButton btnAddAdmin = new JButton("Add Admin");
@@ -307,8 +317,8 @@ public class AdminPage extends JFrame {
 				model.addElement(s+" "+"("+l+")");
 			}
 		});
-		btnAddAdmin.setFont(new Font("Tw Cen MT", Font.BOLD, 21));
-		btnAddAdmin.setBounds(799, 410, 206, 39);
+		btnAddAdmin.setFont(new Font("Tw Cen MT", Font.PLAIN, 21));
+		btnAddAdmin.setBounds(765, 410, 266, 39);
 		contentPane.add(btnAddAdmin);
 		
 		JButton btnAddMember = new JButton("Add Member");
@@ -320,8 +330,8 @@ public class AdminPage extends JFrame {
 				model.addElement(s+" "+"("+l+")");
 			}
 		});
-		btnAddMember.setFont(new Font("Tw Cen MT", Font.BOLD, 21));
-		btnAddMember.setBounds(799, 464, 206, 39);
+		btnAddMember.setFont(new Font("Tw Cen MT", Font.PLAIN, 21));
+		btnAddMember.setBounds(765, 464, 266, 39);
 		contentPane.add(btnAddMember);
 		
 		JButton btnAvailableBooks = new JButton("Available Books");
@@ -335,9 +345,9 @@ public class AdminPage extends JFrame {
 				}
 			}
 		});
-		btnAvailableBooks.setBounds(799, 308, 206, 39);
+		btnAvailableBooks.setBounds(765, 308, 266, 39);
 		contentPane.add(btnAvailableBooks);
-		btnAvailableBooks.setFont(new Font("Tw Cen MT", Font.BOLD, 21));
+		btnAvailableBooks.setFont(new Font("Tw Cen MT", Font.PLAIN, 21));
 		
 		JButton button = new JButton(">>>");
 		button.addActionListener(new ActionListener() {
@@ -393,7 +403,7 @@ public class AdminPage extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
 		panel_1.setForeground(Color.YELLOW);
-		panel_1.setBorder(new TitledBorder(null, "Search Books", TitledBorder.LEADING, TitledBorder.TOP, new Font("Tw Cen MT", Font.BOLD | Font.ITALIC, 25)));
+		panel_1.setBorder(new TitledBorder(null, "Search Books", TitledBorder.LEADING, TitledBorder.TOP, new Font("Tw Cen MT", Font.BOLD, 25)));
 		panel_1.setBackground(new Color(0, 0, 0, 5));
 		panel_1.setBounds(766, 518, 265, 141);
 		contentPane.add(panel_1);
@@ -411,12 +421,19 @@ public class AdminPage extends JFrame {
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String s = textField_7.getText();
-				String k = textField_8.getText();
-				model.removeAllElements();
-				for(Book b : catalog)
-					if(b.getTitle().equals(s)||b.getBookID().equals(k))
+				String s = textField_7.getText().equals("") ? "Null" : textField.getText();
+				int k = textField_8.getText().equals("") ? Integer.MIN_VALUE : Integer.parseInt(textField_1.getText());
+				int counter = 0;
+				
+				for(Book b : catalog) {
+					if(b.getTitle().contains(s) || b.getBookID() == k) {
 						model.addElement(b.toString());
+						++counter;
+					}
+				}
+				
+				if (counter!=0)	JOptionPane.showMessageDialog(null, "Your search brought up "+counter+" results");
+				else JOptionPane.showMessageDialog(null, "Your search brought up 0 results. Please ensure title spelling or ID is exact!");
 			}
 		});
 		btnSearch.setFont(new Font("Tw Cen MT", Font.BOLD, 21));
@@ -432,13 +449,11 @@ public class AdminPage extends JFrame {
 		textField_8.setColumns(10);
 		textField_8.setBounds(89, 59, 176, 20);
 		panel_1.add(textField_8);
-		JLabel label_6 = new JLabel("");
-		Image c = Toolkit.getDefaultToolkit().getImage("Icons//Background.png");
-		label_6.setIcon(new ImageIcon(c));
-		label_6.setBounds(0, -20, 1046, 679);
-		contentPane.add(label_6);
 		
-
-
+		JLabel label_6 = new JLabel("");
+		Image c = Toolkit.getDefaultToolkit().getImage("icons//Background.png");
+		label_6.setIcon(new ImageIcon(c));
+		label_6.setBounds(-81, -109, 1294, 965);
+		contentPane.add(label_6);
 	}
 }

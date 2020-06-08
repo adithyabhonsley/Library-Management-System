@@ -18,20 +18,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-public class AdminLogin extends AdminRegister {
+public class AdminLogin extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private static int count;
 	
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -58,7 +53,7 @@ public class AdminLogin extends AdminRegister {
 	
 	public AdminLogin() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(700, 250, 450, 368);
+		setBounds(0, 0, 450, 368);
 		contentPane = new JPanel();
 		count = 0;
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -95,7 +90,7 @@ public class AdminLogin extends AdminRegister {
 		JLabel label = new JLabel("");
 		label.setForeground(new Color(178, 34, 34));
 		label.setFont(new Font("Tw Cen MT", Font.BOLD, 15));
-		label.setBounds(117, 274, 261, 28);
+		label.setBounds(7, 274, 437, 28);
 		contentPane.add(label);
 		
 		JButton btnLogin = new JButton("Login");
@@ -158,8 +153,6 @@ public class AdminLogin extends AdminRegister {
 		
 		Image a = Toolkit.getDefaultToolkit().getImage("Icons//home.png");
 		btnHome.setIcon(new ImageIcon(a));
-		Image b = Toolkit.getDefaultToolkit().getImage("Icons//man-user.png");
-		btnHome.setSelectedIcon(new ImageIcon(b));
 		
 		btnHome.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -169,7 +162,7 @@ public class AdminLogin extends AdminRegister {
 			}
 		});
 		btnHome.setFont(new Font("Tw Cen MT", Font.PLAIN, 16));
-		btnHome.setBounds(7, 12, 70, 28);
+		btnHome.setBounds(7, 12, 75, 39);
 		contentPane.add(btnHome);
 		
 		JLabel lblForgotPassword = new JLabel("Forgot Password?");
@@ -190,10 +183,9 @@ public class AdminLogin extends AdminRegister {
 		contentPane.add(btnRequestPassword);
 		
 		JLabel label_1 = new JLabel(".");
-		label_1.setVerticalAlignment(SwingConstants.BOTTOM);
-		Image c = Toolkit.getDefaultToolkit().getImage("Icons//Background.png");
+		Image c = Toolkit.getDefaultToolkit().getImage("icons//Background.png");
 		label_1.setIcon(new ImageIcon(c));
-		label_1.setBounds(0, 0, 492, 388);
+		label_1.setBounds(0, 0, 464, 346);
 		contentPane.add(label_1);
 		
 		

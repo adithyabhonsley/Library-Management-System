@@ -6,7 +6,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.SwingConstants;
 
 public class AdminRegister extends JFrame {
 
@@ -43,13 +45,14 @@ public class AdminRegister extends JFrame {
 
 	public AdminRegister() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(700, 250, 450, 325);
+		setBounds(0, 0, 450, 325);
 		contentPane = new JPanel();
 		usernames = "";
 		passwords = "";
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		Image b = Toolkit.getDefaultToolkit().getImage("icons//Background.png");
 		
 		JLabel lblUsername = new JLabel("Username");
 		lblUsername.setForeground(Color.BLACK);
@@ -72,6 +75,20 @@ public class AdminRegister extends JFrame {
 		passwordField.setBounds(187, 91, 159, 20);
 		contentPane.add(passwordField);
 		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setFont(new Font("Tw Cen MT", Font.PLAIN, 17));
+		comboBox.setBounds(187, 156, 159, 22);
+		contentPane.add(comboBox);
+		comboBox.addItem("Select Library Location:");
+		comboBox.addItem("Houston");
+		comboBox.addItem("Dallas");
+		comboBox.addItem("Austin");
+		comboBox.addItem("San Francisco");
+		comboBox.addItem("New York");
+		comboBox.addItem("Chicago");
+		comboBox.addItem("Seattle");
+		comboBox.addItem("Washington DC");
+		
 		JButton button = new JButton("Register");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0){
@@ -90,12 +107,14 @@ public class AdminRegister extends JFrame {
 					obj.setVisible(true);
 					JOptionPane.showMessageDialog(null, "Your Administrator account has been created! Please login to access your account.");
 					try {
-						PrintWriter fw = new PrintWriter ("adminProfiles.txt", false);
-						fw.write (userName+" "+password);
+						FileWriter fw = new FileWriter ("adminProfiles.txt", false);
+						fw.write (userName+" "+password+" "+comboBox.getSelectedItem().toString());
 						fw.close();
-					} catch (FileNotFoundException e) {
+					}
+					catch(Exception e) {
 						e.printStackTrace();
 					}
+					 
 				}
 				
 			}
@@ -114,7 +133,7 @@ public class AdminRegister extends JFrame {
 			}
 		});
 		
-		Image a = Toolkit.getDefaultToolkit().getImage("Icons//return.png");
+		Image a = Toolkit.getDefaultToolkit().getImage("icons//return.png");
 		button_1.setIcon(new ImageIcon(a));
 		button_1.setFont(new Font("Tw Cen MT", Font.PLAIN, 16));
 		button_1.setBounds(10, 11, 75, 33);
@@ -137,30 +156,16 @@ public class AdminRegister extends JFrame {
 		lblLibraryLocation.setBounds(66, 165, 164, 14);
 		contentPane.add(lblLibraryLocation);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Tw Cen MT", Font.PLAIN, 17));
-		comboBox.setBounds(187, 156, 159, 22);
-		contentPane.add(comboBox);
-		comboBox.addItem("Select Library Location:");
-		comboBox.addItem("Houston");
-		comboBox.addItem("Dallas");
-		comboBox.addItem("Austin");
-		comboBox.addItem("San Francisco");
-		comboBox.addItem("New York");
-		comboBox.addItem("Chicago");
-		comboBox.addItem("Seattle");
-		comboBox.addItem("Washington DC");
-		
 		JLabel lblAdministratorRegistration = new JLabel("Administrator Registration");
 		lblAdministratorRegistration.setFont(new Font("Tw Cen MT", Font.BOLD, 24));
 		lblAdministratorRegistration.setBounds(97, 11, 275, 33);
 		contentPane.add(lblAdministratorRegistration);
 		
-		JLabel label = new JLabel(".");
-		label.setFont(new Font("Tw Cen MT", Font.BOLD, 17));
-		Image b = Toolkit.getDefaultToolkit().getImage("Icons//Background.png");
-		label.setIcon(new ImageIcon(b));
-		label.setBounds(0, 0, 418, 235);
-		contentPane.add(label);
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(0, 0, 524, 356);
+		Image c = Toolkit.getDefaultToolkit().getImage("icons//Background.png");
+		lblNewLabel.setIcon(new ImageIcon(c));
+		contentPane.add(lblNewLabel);
+		
 	}
 }
